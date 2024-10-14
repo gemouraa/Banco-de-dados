@@ -3,7 +3,7 @@ from sqlalchemy import create_engine, Column, String, Integer
 from sqlalchemy.orm import sessionmaker,declarative_base
 
 # criando banco de dados.
-MEU_BANCO = create_engine("sqlite: ///meubanco.db")
+MEU_BANCO = create_engine("sqlite:///meubanco.db")
 
 # Crianod conexão com banco de dadods.
 
@@ -30,3 +30,23 @@ class Cliente(Base):
 
 #Criando tabela no banco de dados.
 Base.metadata.create_all(bind=MEU_BANCO)
+
+# CRUD.
+# Create - Insert - Salvar.
+
+os.system("clear")
+print("Solicitando dados para  o usuário. ")
+inserir_nome = input("Digite seu nome: ")
+inserir_email= input("Digite seu email: ")
+inserir_senha = input("Digite seu senha: ")
+
+cliente = Cliente(nome=inserir_nome, email=inserir_email, senha=inserir_senha)
+session.add(cliente)
+session.commit()
+
+# Read - Select - Consulta
+print("\nExibindo dados de todos os clientes.")
+lista_clientes = session.query(Cliente).all()
+
+for cliente in lista_clientes:
+    print(f"{cliente.id} - {cliente.nome} - {cliente.email} - {cliente.senha}")
